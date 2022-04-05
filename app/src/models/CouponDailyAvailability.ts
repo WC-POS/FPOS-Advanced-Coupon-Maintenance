@@ -3,7 +3,7 @@ import { Max, Min } from "class-validator";
 
 import { CouponRule } from "./CouponRule";
 
-@Entity()
+@Entity("CouponDailyAvailability")
 export class CouponDailyAvailability {
   @PrimaryGeneratedColumn("uuid")
   id!: string;

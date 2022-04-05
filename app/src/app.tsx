@@ -49,7 +49,7 @@ import {
   UilSave,
   UilTrashAlt,
 } from "@iconscout/react-unicons";
-import { format, parseISO } from "date-fns";
+import { format, formatISO, getUnixTime, parseISO } from "date-fns";
 import { useACMStore, useFPOSStore } from "./store";
 
 import { CouponDailyAvailability } from "./models/CouponDailyAvailability";
@@ -85,8 +85,8 @@ const blankCouponRule = {
   isDiscountExclusive: false,
   maxApplications: -1,
   notes: "",
-  startDate: new Date(),
-  endDate: new Date(),
+  startDate: formatISO(new Date()),
+  endDate: formatISO(new Date()),
   dailyAvailability: [] as CouponDailyAvailability[],
   items: [] as CouponItem[],
 };
@@ -114,9 +114,8 @@ const Hello = () => {
 
   const cancelRef = useRef(null);
 
-  const { acmConnected, setRules } = useACMStore((state) => ({
+  const { acmConnected } = useACMStore((state) => ({
     acmConnected: state.connected,
-    setRules: state.setRules,
   }));
   const { fposConnected, setItems } = useFPOSStore((state) => ({
     fposConnected: state.connected,
@@ -355,12 +354,16 @@ const Hello = () => {
               <option value="NEW">New Coupon</option>
               <optgroup label="Active Rules">
                 {activeRules.map((rule) => (
-                  <option value={rule.id}>{rule.name}</option>
+                  <option value={rule.id} key={rule.id}>
+                    {rule.name}
+                  </option>
                 ))}
               </optgroup>
               <optgroup label="Inactive Rules">
                 {inactiveRules.map((rule) => (
-                  <option value={rule.id}>{rule.name}</option>
+                  <option value={rule.id} key={rule.id}>
+                    {rule.name}
+                  </option>
                 ))}
               </optgroup>
             </Select>
@@ -477,11 +480,11 @@ const Hello = () => {
                     <Input
                       variant="filled"
                       type="date"
-                      value={format(new Date(couponRule.startDate), "y-MM-dd")}
+                      value={couponRule.startDate}
                       onChange={(e) =>
                         setCouponRule({
                           ...couponRule,
-                          startDate: parseISO(e.target.value),
+                          startDate: e.target.value,
                         })
                       }
                     />
@@ -496,11 +499,11 @@ const Hello = () => {
                     <Input
                       variant="filled"
                       type="date"
-                      value={format(new Date(couponRule.endDate), "y-MM-dd")}
+                      value={couponRule.endDate}
                       onChange={(e) =>
                         setCouponRule({
                           ...couponRule,
-                          endDate: parseISO(e.target.value),
+                          endDate: e.target.value,
                         })
                       }
                     />

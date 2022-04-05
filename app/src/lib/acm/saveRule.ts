@@ -5,15 +5,15 @@ import { getConnection } from "typeorm";
 import { v4 } from "uuid";
 
 async function saveRule(
-  ruleObj: CouponRule,
+  rule: CouponRule,
   itemsArr: CouponItem[],
   dailyAvailabilityArr: CouponDailyAvailability[]
 ) {
+  console.log(dailyAvailabilityArr);
   const conn = getConnection("ACM");
   if (!conn || !conn.isConnected) return undefined;
 
   const ruleRepo = conn.getRepository(CouponRule);
-  const rule = await ruleRepo.findOne({ id: ruleObj.id });
   if (!rule) return undefined;
 
   const dailyRepo = conn.getRepository(CouponDailyAvailability);
@@ -21,19 +21,15 @@ async function saveRule(
   await dailyRepo.delete({ couponRule: rule });
   await itemRepo.delete({ couponRule: rule });
 
-  const newRule = await ruleRepo.save({
-    ...ruleObj,
-    items: [],
-    dailyAvailability: [],
-  });
-  dailyRepo.insert(
+  const newRule = await ruleRepo.save(rule);
+  await dailyRepo.insert(
     dailyAvailabilityArr.map((day) => ({
       ...day,
       id: v4(),
       couponRule: newRule,
     }))
   );
-  itemRepo.insert(
+  await itemRepo.insert(
     itemsArr.map((item) => ({ ...item, id: v4(), rule: newRule }))
   );
   return ruleRepo.findOne(

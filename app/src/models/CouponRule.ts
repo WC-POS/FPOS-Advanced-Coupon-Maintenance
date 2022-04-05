@@ -4,7 +4,7 @@ import { CouponDailyAvailability } from "./CouponDailyAvailability";
 import { CouponItem } from "./CouponItem";
 import { Min } from "class-validator";
 
-@Entity()
+@Entity("CouponRule")
 export class CouponRule {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -28,11 +28,11 @@ export class CouponRule {
   @Column("nvarchar")
   notes!: string;
 
-  @Column("date")
-  startDate!: Date;
+  @Column("nvarchar")
+  startDate!: string;
 
-  @Column("date")
-  endDate!: Date;
+  @Column("nvarchar")
+  endDate!: string;
 
   @OneToMany(
     () => CouponDailyAvailability,

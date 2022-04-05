@@ -3,7 +3,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { CouponRule } from "./CouponRule";
 import { IsIn } from "class-validator";
 
-@Entity()
+@Entity("CouponItem")
 export class CouponItem {
   @PrimaryGeneratedColumn("uuid")
   id!: string;

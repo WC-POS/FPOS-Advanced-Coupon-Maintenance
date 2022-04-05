@@ -22,23 +22,13 @@ async function createRule(
     dailyAvaibility: [],
   });
 
-  const itemSavePromises = [] as Promise<CouponItem>[];
-  itemsArr.forEach((item) => {
-    itemSavePromises.push(
-      itemRepo.save({ ...item, id: v4(), couponRule: rule })
-    );
-  });
-  const dailyAvailabilitySavePromises =
-    [] as Promise<CouponDailyAvailability>[];
-  dailyAvailabilityArr.forEach((day) => {
-    dailyAvailabilitySavePromises.push(
-      dailyRepo.save({ ...day, id: v4(), couponRule: rule })
-    );
-  });
-
-  await Promise.all(dailyAvailabilitySavePromises);
-  await Promise.all(itemSavePromises);
-
+  await dailyRepo.insert(
+    dailyAvailabilityArr.map((day) => ({
+      ...day,
+      couponRule: rule,
+    }))
+  );
+  await itemRepo.insert(itemsArr.map((item) => ({ ...item, rule })));
   return ruleRepo.findOne(
     {
       id: rule.id,
