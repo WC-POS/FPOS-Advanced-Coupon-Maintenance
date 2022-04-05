@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@author.io/arg@1.3.22":
+  version "1.3.22"
+  resolved "https://registry.yarnpkg.com/@author.io/arg/-/arg-1.3.22.tgz#800acca32716ab6a43c7f485270de1c012b8be2a"
+  integrity sha512-P8Ov8N4LzVZDwvSjFu+eJVNbEqfIWcXMy7rARG1KNnII8+XSHXnR1JVJfUDgEnJNPPys1w0lV8kN4RPj9xhDHA==
+
 "@azure/abort-controller@^1.0.0":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@azure/abort-controller/-/abort-controller-1.0.4.tgz#fd3c4d46c8ed67aace42498c8e2270960250eafd"
@@ -927,6 +932,14 @@ node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
+node-windows@^1.0.0-beta.7:
+  version "1.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/node-windows/-/node-windows-1.0.0-beta.7.tgz#b786eee9db9dcaaf6c58d524c564bfb687beabfa"
+  integrity sha512-JnsGjdNmZ9oQZXXUoC7psAFQcyJaMa7cwrfNX+CbZNuPvP3fczVXT5uIO4n56v7jY2814XEtWulYabJUAgbcNA==
+  dependencies:
+    "@author.io/arg" "1.3.22"
+    xml "1.0.1"
+
 npmlog@^4.0.1:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
@@ -1382,6 +1395,11 @@ xml2js@^0.4.19, xml2js@^0.4.23:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
+
+xml@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
+  integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
 xmlbuilder@~11.0.0:
   version "11.0.1"
