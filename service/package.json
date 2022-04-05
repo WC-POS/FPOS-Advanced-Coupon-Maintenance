@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc",
+    "install": "npm run build && node dist/service.js",
+    "package": "npm run build && pkg dist/index.js -t node16-win-x64 -o release/acm-service.exe",
+    "start": "npm run build && node dist/index.js",
+    "uninstall": "node dist/service.js -uninstall"
+  },
   "dependencies": {
     "better-sqlite3": "^7.5.0",
     "class-validator": "^0.13.2",
@@ -17,6 +24,8 @@
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",
     "@types/node": "^17.0.23",
-    "node-windows": "^1.0.0-beta.7"
+    "node-windows": "^1.0.0-beta.6",
+    "pkg": "^5.5.2",
+    "typescript": "^4.6.3"
   }
 }

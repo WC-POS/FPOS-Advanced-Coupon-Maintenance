@@ -10,11 +10,14 @@ import operate from "./lib/acm/operate";
 import splitItemsBySeat from "./lib/fpos/splitItemsBySeat";
 import updateState from "./lib/acm/updateState";
 import validateSaleItems from "./lib/acm/validateSaleItems";
+import getState from "./lib/acm/getState";
+import updateLog from "./lib/acm/updateLog";
 
 async function main() {
   const acm = await connectACM();
   const fpos = await connectFPOS();
   if (acm && fpos && acm.isConnected && fpos.isConnected) {
+    await getState();
     const saleItemRepo = fpos.getRepository(SaleItem);
     const sales = await listCurrentSales();
     const rules = await listCurrentRules();
@@ -25,32 +28,33 @@ async function main() {
 
       for (const seat of seats) {
         for (const rule of rules) {
-          const isValid = validateSaleItems(rule, seat);
+          const isValid = await validateSaleItems(rule, seat);
 
           if (isValid) {
             const validItems = await getValidSaleItems(rule, seat);
-
             for (const validItem of validItems) {
               const couponItem = rule.items.find(
                 (item) => item.itemName === validItem.itemName
               )!;
-              logOperation(couponItem, validItem);
-              await operate(couponItem, validItem);
-              saleItemRepo.save(validItem);
+              const log = await logOperation(couponItem, validItem, rule);
+              const newSaleItem = await saleItemRepo.save({ ...await operate(couponItem, validItem, rule) });
+              await updateLog(newSaleItem, log)
             }
           }
         }
       }
     }
     await updateState();
+  } else {
+    console.log("Could not connect to databases")
   }
 }
 
-main()
-  .then(() => {
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.log(err);
-    process.exit(0);
-  });
+setInterval(async () => {
+  try {
+    main()
+  } catch (err) {
+    console.log(err)
+    process.exit(0)
+  }
+}, 15000)

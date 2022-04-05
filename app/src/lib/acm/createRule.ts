@@ -28,7 +28,7 @@ async function createRule(
       couponRule: rule,
     }))
   );
-  await itemRepo.insert(itemsArr.map((item) => ({ ...item, rule })));
+  await itemRepo.insert(itemsArr.map((item) => ({ ...item, couponRule: rule })));
   return ruleRepo.findOne(
     {
       id: rule.id,

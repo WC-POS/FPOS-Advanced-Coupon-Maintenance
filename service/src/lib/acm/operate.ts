@@ -4,8 +4,10 @@ import discountFlat from "./operations/discountFlat";
 import discountPercent from "./operations/discountPercent";
 import priceChange from "./operations/priceChange";
 import priceIncrease from "./operations/priceIncrease";
+import { CouponRule } from "../../models/CouponRule";
+import { getConnection } from "typeorm";
 
-function operate(couponItem: CouponItem, saleItem: SaleItem) {
+async function operate(couponItem: CouponItem, saleItem: SaleItem, rule: CouponRule) {
   switch (couponItem.operation) {
     case "discount-flat":
       saleItem.actualPrice = discountFlat(
@@ -49,11 +51,13 @@ function operate(couponItem: CouponItem, saleItem: SaleItem) {
       );
       break;
   }
-  saleItem.receiptDescription =
-    `**${couponItem.couponRule.receiptName}-${saleItem.receiptDescription}`.slice(
+  if (rule.receiptName) {
+    saleItem.receiptDescription =
+    `**${rule.receiptName}-${saleItem.receiptDescription}`.slice(
       0,
       16
     );
+  }
   return saleItem;
 }
 

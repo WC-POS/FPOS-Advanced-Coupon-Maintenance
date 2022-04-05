@@ -30,7 +30,7 @@ async function saveRule(
     }))
   );
   await itemRepo.insert(
-    itemsArr.map((item) => ({ ...item, id: v4(), rule: newRule }))
+    itemsArr.map((item) => ({ ...item, id: v4(), couponRule: newRule }))
   );
   return ruleRepo.findOne(
     { id: newRule.id },
