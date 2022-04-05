@@ -4,9 +4,9 @@ function splitItemsBySeat(items: SaleItem[]) {
   const seats = [[]] as SaleItem[][];
   let currentSeat = 0;
   items.forEach((item) => {
-    if (item.itemName && item.itemName !== "") {
+    if (item.flags !== 4 && item.flags !== 32) {
       seats[currentSeat].push(item);
-    } else {
+    } else if (item.flags === 4) {
       currentSeat = item.basePrice;
       seats[currentSeat] = [];
     }
