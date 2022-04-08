@@ -11,7 +11,7 @@ function getUserDataPath() {
       appName
     );
   } else if (process.platform === "win32") {
-    if (process.env.USERDATA) basePath = path.join(process.env.USERDATA)
+    if (process.env.USERDATA) basePath = path.join(process.env.USERDATA);
     else basePath = path.join(process.env.APPDATA!, appName);
   }
   return basePath as string;

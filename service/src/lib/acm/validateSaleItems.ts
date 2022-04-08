@@ -13,12 +13,12 @@ async function validateSaleItems(rule: CouponRule, items: SaleItem[]) {
     .filter((item) => item !== undefined);
   const validItems = new Array(requiredItemNames.length);
   validItems.fill(false);
-  for (const requiredItem of requiredItemNames) {
+  for (const [requiredIndex, requiredItem] of requiredItemNames.entries()) {
     let index = items.findIndex((item) => item.itemName === requiredItem);
     if (index !== -1) {
       const logItem = await logRepo.findOne({ fposSaleItemId: items[index].saleItemId, rule: rule.id })
       if (logItem) continue;
-      validItems[index] = true;
+      validItems[requiredIndex] = true;
     }
   }
   return validItems.reduce((prev, current) => prev && current, true);
