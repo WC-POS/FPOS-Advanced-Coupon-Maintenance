@@ -40,7 +40,9 @@ const ScheduleRow: React.FC<ScheduleRowProps> = ({ value, onChange }) => {
         <Stack direction="row" alignItems="center">
           <Input
             type="time"
-            value={`${value.startHour}:${value.startMinute
+            value={`${value.startHour
+              .toString()
+              .padStart(2, "0")}:${value.startMinute
               .toString()
               .padStart(2, "0")}`}
             onChange={(e) =>

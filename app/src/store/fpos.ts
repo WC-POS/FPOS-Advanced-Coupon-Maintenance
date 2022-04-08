@@ -4,21 +4,21 @@ export interface FPOSState extends State {
   connected: boolean;
   host: string;
   database: string;
-  items: SimpleItem[];
+  items: SimpleDepartment[];
   reset: () => void;
   setConnected: (val: boolean) => void;
   setDatabase: (db: string) => void;
   setHost: (hostname: string) => void;
   getInfo: () => Promise<StatusInfo>;
   setInfo: (info: StatusInfo) => void;
-  setItems: (items: SimpleItem[]) => void;
+  setItems: (items: SimpleDepartment[]) => void;
 }
 
 const FPOSStore = (set: SetState<FPOSState>) => ({
   connected: false,
   host: "",
   database: "",
-  items: [] as SimpleItem[],
+  items: [] as SimpleDepartment[],
   reset: () => {
     set(() => ({ connected: false, host: "", database: "", items: [] }));
   },
@@ -41,7 +41,8 @@ const FPOSStore = (set: SetState<FPOSState>) => ({
       database: info.database,
     }));
   },
-  setItems: (itemArray: SimpleItem[]) => {
+  setItems: (itemArray: SimpleDepartment[]) => {
+    console.log(itemArray);
     set(() => ({ items: itemArray }));
   },
 });

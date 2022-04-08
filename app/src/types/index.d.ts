@@ -23,13 +23,6 @@ declare global {
     database: string;
     name: "FPOS" | "ACM";
   }
-
-  // Renderer Interfaces
-  export interface SimpleItem {
-    name: string;
-    description: string;
-    department: string;
-  }
 }
 
 export {};

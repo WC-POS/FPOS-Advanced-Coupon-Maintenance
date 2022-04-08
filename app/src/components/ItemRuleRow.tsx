@@ -75,10 +75,15 @@ const ItemRuleRow: React.FC<ItemRuleRowProps> = ({
         value={couponItem.itemName}
         onChange={(e) => onChange({ ...couponItem, itemName: e.target.value })}
       >
-        {items.map((item) => (
-          <option key={item.name} value={item.name}>
-            {item.name}
-          </option>
+        <option value="">Not Specified</option>
+        {items.map((dept) => (
+          <optgroup key={dept.name} label={dept.name}>
+            {dept.items.map((item) => (
+              <option key={item.name} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </optgroup>
         ))}
       </Select>
       <Menu>
